@@ -5,7 +5,7 @@ import threading
 from scapy.all import ARP, Ether, srp, send, sniff, wrpcap
 
 # Target details
-victim_ip = "192.168.31.132"      # Change to your victim
+victim_ip = "192.168.31.129"      # Change to your victim
 gateway_ip = "192.168.31.1"       # Change to your router
 
 # Get MAC addresses
