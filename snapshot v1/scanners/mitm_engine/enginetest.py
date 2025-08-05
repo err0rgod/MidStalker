@@ -7,7 +7,7 @@ import time
 import signal
 
 # Configuration
-TARGET_IP      = "192.168.1.100"  # Victim IP
+TARGET_IP      = "192.168.1.132"  # Victim IP
 GATEWAY_IP     = "192.168.1.1"     # Router IP
 INTERFACE      = "eth0"            # Network interface
 PACKET_FILTER  = "tcp"            # Filter for TCP packets (modify as needed)
