@@ -35,7 +35,7 @@ def enable_ip_forwarding():
     else:
         print("[-] Unsupported OS")
         sys.exit(1)
-
+        
 # Disable IP forwarding
 def disable_ip_forwarding():
     if sys.platform.startswith("linux"):
