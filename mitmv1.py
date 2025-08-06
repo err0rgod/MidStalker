@@ -60,7 +60,7 @@ if __name__ == "__main__":
     try:
         victim_mac = get_mac(victim_ip)
         gateway_mac = get_mac(gateway_ip)
-
+           
         if not victim_mac or not gateway_mac:
             print("[-] Failed to get MAC addresses.")
             exit()
