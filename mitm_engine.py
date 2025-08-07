@@ -32,7 +32,7 @@ def arp_scan(ip_range):
     answered_lst = scapy.arping(ip_range,verbose=0)[0]
     for res in answered_lst:
         arp_responses.append({"ip" : res[1].psrc, "mac" : res[1].hwsrc})
-        return arp_responses
+    return arp_responses
     
 
 # fetch the gateway ip
@@ -55,7 +55,7 @@ def is_gateway(gateway_ip):
 
 def get_interface():
 
-    os.chdir("/sys/class/met")
+    os.chdir("/sys/class/net")
 
     interface_names = os.listdir()
 
@@ -212,7 +212,7 @@ node_to_spoof = client_info[choice]
 
 
 t1 = threading.Thread(target=send_packets, daemon=True)
-t1.start
+t1.start()
 
 os.chdir(cwd)
 
