@@ -3,7 +3,7 @@ Mitm engine
 Wiershark
 spoofer dns
 modify mitm to mitm all hosts
-server and spoofed pages
+server and spoofed pages     -------   done partially
 manage and analyzer
 vulnerebility scanner
 all other attacks

