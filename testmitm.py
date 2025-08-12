@@ -203,7 +203,7 @@ def signal_handler(sig, frame):
         if choice == 'y':
             try:
                 print("[*] Starting web analyzer...")
-                subprocess.run(["streamlit", "run", "Analyzer/app.py"])
+                subprocess.run([sys.executable, "-m", "streamlit", "run", "Analyzer/app.py"])
             except Exception as e:
                 print(f"[!] Failed to start analyzer: {e}")
     
