@@ -4,7 +4,7 @@ import asyncio
 import json
 from typing import Dict, List
 
-async def run_masscan(target: str, ports: str = "1-65535", rate: str = "1000") -> Dict[str, List[dict]]:
+async def run_masscan(target: str, ports: str = "1-65535", rate: str = "1000", timeout: int = 300) -> Dict[str, List[dict]]:
     """
     Run masscan to discover open ports on target network.
     
@@ -12,6 +12,7 @@ async def run_masscan(target: str, ports: str = "1-65535", rate: str = "1000") -
         target: IP range or subnet (e.g., '192.168.1.0/24')
         ports: Port range to scan (default: all ports)
         rate: Packets per second (default: 1000)
+        timeout: Maximum execution time in seconds (default: 300)
     
     Returns:
         Dictionary with discovered hosts and ports
@@ -25,7 +26,12 @@ async def run_masscan(target: str, ports: str = "1-65535", rate: str = "1000") -
             stderr=asyncio.subprocess.PIPE
         )
         
-        stdout, stderr = await proc.communicate()
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+        except asyncio.TimeoutError:
+            proc.kill()
+            await proc.communicate()
+            raise Exception("Masscan scan timed out")
         
         if proc.returncode != 0:
             raise Exception(f"Masscan error: {stderr.decode()}")
