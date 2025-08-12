@@ -8,6 +8,7 @@ import threading
 import time
 import signal
 import subprocess
+import streamlit
 import ipaddress
 import argparse
 
@@ -202,7 +203,7 @@ def signal_handler(sig, frame):
         if choice == 'y':
             try:
                 print("[*] Starting web analyzer...")
-                subprocess.Popen(["streamlit", "run", "Analyzer/app.py"])
+                subprocess.run(["streamlit", "run", "Analyzer/app.py"])
             except Exception as e:
                 print(f"[!] Failed to start analyzer: {e}")
     
