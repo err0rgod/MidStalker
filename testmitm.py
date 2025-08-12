@@ -8,10 +8,29 @@ import time
 import signal
 import subprocess
 import ipaddress
+import argparse
+
+
+
+
+
+
+
+
+
+
+
+
+parser = argparse.ArgumentParser(description="Enhanced MITM Tool with Web Analyzer")
+
+parser.add_argument("-g","--gateway", required=True,type=str, help="Enter the gateway of the network like 192.168.1.1")
+parser.add_argument("-i","--interface", required=True,type=str, help="Enter the interface of the network like eth0 or wlan0")
+
+
 
 # Configuration
-GATEWAY_IP = "192.168.1.1"     # Router IP
-INTERFACE = "eth0"             # Network interface
+GATEWAY_IP = parser.parse_args().gateway     # Router IP
+INTERFACE = parser.parse_args().interface     # Network interface
 PACKET_FILTER = "tcp"          # Filter for TCP packets (modify as needed)
 PCAP_DIR = "captures"          # Directory to store pcap files
 ANALYZER_PATH = "./analyzer/main.py"  # Path to web analyzer
@@ -25,6 +44,48 @@ pcap_counter = 1
 total_packets = 0
 target_ips = []
 capture_all = False
+
+
+
+
+
+def display_banner():
+    banner = r"""
+__       __  __        __   ______    __                __  __                 
+/  \     /  |/  |      /  | /      \  /  |              /  |/  |                     
+$$  \   /$$ |$$/   ____$$ |/$$$$$$  |_$$ |_     ______  $$ |$$ |   __   ______  
+$$$  \ /$$$ |/  | /    $$ |$$ \__$$// $$   |   /      \ $$ |$$ |  /  | /      \ 
+$$$$  /$$$$ |$$ |/$$$$$$$ |$$      \$$$$$$/    $$$$$$  |$$ |$$ |_/$$/ /$$$$$$  |
+$$ $$ $$/$$ |$$ |$$ |  $$ | $$$$$$  | $$ | __  /    $$ |$$ |$$   $$<  $$    $$ |
+$$ |$$$/ $$ |$$ |$$ \__$$ |/  \__$$ | $$ |/  |/$$$$$$$ |$$ |$$$$$$  \ $$$$$$$$/ 
+$$ | $/  $$ |$$ |$$    $$ |$$    $$/  $$  $$/ $$    $$ |$$ |$$ | $$  |$$       |
+$$/      $$/ $$/  $$$$$$$/  $$$$$$/    $$$$/   $$$$$$$/ $$/ $$/   $$/  $$$$$$$/                                                                              
+  ______                                                                        
+ /      \                                                                       
+/$$$$$$  |                                                                      
+$$ |  $$/                                                                       
+$$ |                                                                            
+$$ |                                                                            
+$$/
+"""
+    print(banner)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Create captures directory if it doesn't exist
 if not os.path.exists(PCAP_DIR):
@@ -204,6 +265,7 @@ def start_mitm():
     sniff(iface=INTERFACE, filter=PACKET_FILTER, prn=packet_callback, store=0)
 
 if __name__ == "__main__":
+    display_banner()
     print("[=== ENHANCED MITM TOOL (Educational Use Only) ===]")
     print(f"[*] Gateway IP: {GATEWAY_IP}")
     print(f"[*] Interface: {INTERFACE}")
