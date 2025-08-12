@@ -2,10 +2,6 @@
 
 > **"Every packet hides a story. I give you the tools to decode it."**
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.48.0+-red.svg)](https://streamlit.io/)
-[![Scapy](https://img.shields.io/badge/Scapy-Network%20Analysis-green.svg)](https://scapy.net/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A **weapons-grade** PCAP (Packet Capture) analysis tool built for red teamers, cybersecurity researchers, and network analysts. This enhanced version provides comprehensive network traffic analysis with advanced visualization, geographic mapping, and security threat detection.
 
@@ -43,8 +39,8 @@ A **weapons-grade** PCAP (Packet Capture) analysis tool built for red teamers, c
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/err0rgod/PCAP-Analyzer.git
-   cd PCAP-Analyzer
+   git clone https://github.com/err0rgod/midstalker
+   cd midstalker
    ```
 
 2. **Install dependencies**
