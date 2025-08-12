@@ -4,7 +4,7 @@ import os
 import sys
 import threading
 import time
-import signal
+import signal 
 
 # Configuration
 TARGET_IP      = "192.168.1.132"  # Victim IP

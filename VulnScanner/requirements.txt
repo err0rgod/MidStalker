@@ -1,0 +1,3 @@
+nmap3==2.5.1
+asyncio
+python-masscan
