@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from flask import app
 from scapy.all import *
 from scapy.utils import PcapWriter
 import os
@@ -201,7 +202,7 @@ def signal_handler(sig, frame):
         if choice == 'y':
             try:
                 print("[*] Starting web analyzer...")
-                subprocess.Popen(["streamlit", "run", ANALYZER_PATH])
+                subprocess.Popen(["streamlit", "run", "Analyzer/app.py"])
             except Exception as e:
                 print(f"[!] Failed to start analyzer: {e}")
     
