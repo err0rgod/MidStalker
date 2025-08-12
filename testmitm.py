@@ -67,6 +67,9 @@ $$ |  $$/
 $$ |                                                                            
 $$ |                                                                            
 $$/
+
+By err0rgod./ 
+
 """
     print(banner)
 
